@@ -30,7 +30,7 @@ namespace MilVetIndApi.Authentication
             builder.Entity<Gender>().HasData(new Gender { PK_Gender = 3, GenderName = "Other" });
 
             //District
-            builder.Entity<District>().HasData(new District { PK_District = 1, DistrictName = "District 1" });
+            builder.Entity<District>().HasData(new District { PK_District = 1, DistrictName = "District 1", FK_Region=1});
 
             //District
             builder.Entity<Store>().HasData(new Store { PK_Store = 1, StoreName = "First Store", FK_District=1, LastId= 0, StoreAbbreviation="FS" });
