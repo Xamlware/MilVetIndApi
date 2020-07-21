@@ -31,14 +31,11 @@ namespace MilVetIndApi.Authentication
 
             //District
             builder.Entity<District>().HasData(new District { PK_District = 1, DistrictName = "District 1", FK_Region=1});
-            builder.Entity<District>(e => e.HasKey(k => k.FK_Region));
-
+            
             //Store
             builder.Entity<Store>().HasData(new Store { PK_Store = 1, StoreName = "First Store", FK_District=1, LastId= 0, StoreAbbreviation="FS" });
-            builder.Entity<Store>(e => e.HasKey(k => k.FK_District));
-
+           
             //StoreSales
-            builder.Entity<StoreSales>(e => e.HasKey(k => k.FK_Store));
 
             //StoreSalesItem
             builder.Entity<StoreSalesItem>(e => e.HasKey(k => k.FK_StoreSales));
@@ -114,5 +111,6 @@ namespace MilVetIndApi.Authentication
         public DbSet<Store> Store { get; set; }
         public DbSet<StoreSales> StoreSales { get; set; }
         public DbSet<StoreSalesItem> StoreSalesItem { get; set; }
+        public DbSet<MilVetIndApi.Data.EmployeeTime> EmployeeTime { get; set; }
     }
 }
