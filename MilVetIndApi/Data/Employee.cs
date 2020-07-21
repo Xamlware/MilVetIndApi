@@ -26,6 +26,9 @@ namespace MilVetIndApi.Data
 		[Required(ErrorMessage = "Employee Id Required")]
 		public string EmployeeId { get; set; }
 
+		[Required(ErrorMessage = "Asp User id Required")]
+		public string AspUserId { get; set; }
+
 		[Required(ErrorMessage = "Store Id Required")]
 		public string EmployeeName { get; set; }
 

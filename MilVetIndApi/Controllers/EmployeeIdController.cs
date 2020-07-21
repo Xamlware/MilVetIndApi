@@ -26,9 +26,15 @@ namespace MilVetIndApi.Controllers
         public async Task<ActionResult<string>> GetNewEmployeeId(int id)
         {
             var employee = _context.Employee.FirstOrDefault(e => e.PK_Employee == id);
+            if (employee == null)
+            {
+                return NotFound();
+
+            }
+
             var store = _context.Store.First<Store>(e => e.PK_Store == employee.FK_Store);
 
-            if (store == null || employee == null)
+            if (store == null)
             {
                 return NotFound();
             } 
@@ -45,9 +51,8 @@ namespace MilVetIndApi.Controllers
                 var emp = new Employee();
                 emp.EmployeeId = empId;
                 emp.FK_Store = store.PK_Store;
-                //emp.PK_Employee = user.PK_Employee;
-
-                _context.Employee.Add(emp);
+               
+                //_context.Employee.Add(emp);
                 await _context.SaveChangesAsync();
 
             return empId;
