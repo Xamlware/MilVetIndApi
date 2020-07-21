@@ -9,7 +9,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Authentication\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

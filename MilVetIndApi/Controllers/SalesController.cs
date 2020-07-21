@@ -12,48 +12,48 @@ namespace MilVetIndApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StoreSalesItemController : ControllerBase
+    public class SalesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public StoreSalesItemController(ApplicationDbContext context)
+        public SalesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/StoreSalesItem
+        // GET: api/Sales
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StoreSalesItem>>> GetStoreSalesItem()
+        public async Task<ActionResult<IEnumerable<Sales>>> GetSales()
         {
-            return await _context.StoreSalesItem.ToListAsync();
+            return await _context.Sales.ToListAsync();
         }
 
-        // GET: api/StoreSalesItem/5
+        // GET: api/Sales/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<StoreSalesItem>> GetStoreSalesItem(int id)
+        public async Task<ActionResult<Sales>> GetSales(int id)
         {
-            var storeSalesItem = await _context.StoreSalesItem.FindAsync(id);
+            var sales = await _context.Sales.FindAsync(id);
 
-            if (storeSalesItem == null)
+            if (sales == null)
             {
                 return NotFound();
             }
 
-            return storeSalesItem;
+            return sales;
         }
 
-        // PUT: api/StoreSalesItem/5
+        // PUT: api/Sales/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStoreSalesItem(int id, StoreSalesItem storeSalesItem)
+        public async Task<IActionResult> PutSales(int id, Sales sales)
         {
-            if (id != storeSalesItem.PK_StoreSalesItem)
+            if (id != sales.PK_Sales)
             {
                 return BadRequest();
             }
 
-            _context.Entry(storeSalesItem).State = EntityState.Modified;
+            _context.Entry(sales).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace MilVetIndApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StoreSalesItemExists(id))
+                if (!SalesExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace MilVetIndApi.Controllers
             return NoContent();
         }
 
-        // POST: api/StoreSalesItem
+        // POST: api/Sales
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<StoreSalesItem>> PostStoreSalesItem(StoreSalesItem storeSalesItem)
+        public async Task<ActionResult<Sales>> PostSales(Sales sales)
         {
-            _context.StoreSalesItem.Add(storeSalesItem);
+            _context.Sales.Add(sales);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStoreSalesItem", new { id = storeSalesItem.PK_StoreSalesItem }, storeSalesItem);
+            return CreatedAtAction("GetSales", new { id = sales.PK_Sales }, sales);
         }
 
-        // DELETE: api/StoreSalesItem/5
+        // DELETE: api/Sales/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<StoreSalesItem>> DeleteStoreSalesItem(int id)
+        public async Task<ActionResult<Sales>> DeleteSales(int id)
         {
-            var storeSalesItem = await _context.StoreSalesItem.FindAsync(id);
-            if (storeSalesItem == null)
+            var sales = await _context.Sales.FindAsync(id);
+            if (sales == null)
             {
                 return NotFound();
             }
 
-            _context.StoreSalesItem.Remove(storeSalesItem);
+            _context.Sales.Remove(sales);
             await _context.SaveChangesAsync();
 
-            return storeSalesItem;
+            return sales;
         }
 
-        private bool StoreSalesItemExists(int id)
+        private bool SalesExists(int id)
         {
-            return _context.StoreSalesItem.Any(e => e.PK_StoreSalesItem == id);
+            return _context.Sales.Any(e => e.PK_Sales == id);
         }
     }
 }

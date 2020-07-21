@@ -13,7 +13,7 @@ namespace MilVetIndApi.Authentication
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
+             
             //Race
             builder.Entity<Race>().HasData(new Race { PK_Race = 1, RaceName = "White" });
             builder.Entity<Race>().HasData(new Race { PK_Race = 2, RaceName = "Black" });
@@ -35,11 +35,7 @@ namespace MilVetIndApi.Authentication
             //Store
             builder.Entity<Store>().HasData(new Store { PK_Store = 1, StoreName = "First Store", FK_District=1, LastId= 0, StoreAbbreviation="FS" });
            
-            //StoreSales
-
-            //StoreSalesItem
-            builder.Entity<StoreSalesItem>(e => e.HasKey(k => k.FK_StoreSales));
-
+          
             //Region
             builder.Entity<Region>().HasData(new Region { PK_Region = 1, RegionName = "Region 1" });
 
@@ -105,12 +101,11 @@ namespace MilVetIndApi.Authentication
         public DbSet<District> District { get; set; }
         public DbSet<Region> Region { get; set; }
         public DbSet<Race> Race { get; set; }
-        //public DbSet<User> User { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Store> Store { get; set; }
-        public DbSet<StoreSales> StoreSales { get; set; }
-        public DbSet<StoreSalesItem> StoreSalesItem { get; set; }
-        public DbSet<MilVetIndApi.Data.EmployeeTime> EmployeeTime { get; set; }
+        public DbSet<Sales> Sales { get; set; }
+        public DbSet<SalesItem> SalesItem { get; set; }
+        public DbSet<EmployeeTime> EmployeeTime { get; set; }
     }
 }

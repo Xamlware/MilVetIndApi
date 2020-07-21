@@ -3,18 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MilVetIndApi.Data
 {
-	public class StoreSalesItem
+	public class SalesItem
 	{
-		public StoreSalesItem()
+		public SalesItem()
 		{
 		}
 
 		[Key]
-		public int PK_StoreSalesItem { get; set; }
+		public int PK_SalesItem { get; set; }
 
-		[Required(ErrorMessage = "Store Sales id is required")]
-		public int FK_StoreSales { get; set; }
-
+		public int FK_Sales { get; set; }
 		[Required(ErrorMessage = "Inventory id is required")]
 		public int FK_Inventory { get; set; }
 
@@ -27,8 +25,5 @@ namespace MilVetIndApi.Data
 		[Required(ErrorMessage = "Discount is required")]
 		public float Discount { get; set; }
 
-
 	}
 }
-
-

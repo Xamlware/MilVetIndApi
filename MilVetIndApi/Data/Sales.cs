@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MilVetIndApi.Data
 {
-	public class StoreSales
+	public class Sales
 	{
-		public StoreSales()
+		public Sales()
 		{
 		}
 
 		[Key]
-		public int PK_StoreSales { get; set; }
+		public int PK_Sales { get; set; }
 
 		[Required(ErrorMessage = "Store id is required")]
 		public int FK_Store { get; set; }
