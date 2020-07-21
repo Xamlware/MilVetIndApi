@@ -21,43 +21,44 @@ namespace MilVetIndApi.Controllers
 			_context = context;
         }
 
-            // GET: api/Store/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<string>> GetNewEmployeeId(int id)
-        //{
-            //var user = _context.User.FirstOrDefault(e => e.PK_User == id);
-            //var store = _context.Store.First<Store>(e => e.PK_Store == user.FK_Store);
+        //GET: api/Store/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<string>> GetNewEmployeeId(int id)
+        {
+            var employee = _context.Employee.FirstOrDefault(e => e.PK_Employee == id);
+            var store = _context.Store.First<Store>(e => e.PK_Store == employee.FK_Store);
 
-            //if (store == null || user == null)
-            //{
-            //return NotFound();
-            //} 
-            // else
-            // {
-            //var empInt = store.LastId + 1;
-            //var empId = store.StoreAbbreviation + "00" + empInt.ToString();
+            if (store == null || employee == null)
+            {
+                return NotFound();
+            } 
+            else
+            {
 
-            //update store lastid
-            //store.LastId = empInt;
+                var empInt = store.LastId + 1;
+				var empId = store.StoreAbbreviation + "00" + empInt.ToString();
 
-            //Created new employee record
-            //var emp = new Employee();
-            //emp.EmployeeId = empId;
-            //emp.FK_Store = store.PK_Store;
-            //emp.FK_User = user.PK_User;
+                //update store lastid
+                store.LastId = empInt;
 
-            //_context.Employee.Add(emp);
-            //await _context.SaveChangesAsync();
+                //Created new employee record
+                var emp = new Employee();
+                emp.EmployeeId = empId;
+                emp.FK_Store = store.PK_Store;
+                //emp.PK_Employee = user.PK_Employee;
 
-            //return empId;
-        //}
-    //}
+                _context.Employee.Add(emp);
+                await _context.SaveChangesAsync();
+
+            return empId;
+        }
+    }
 
        /* [HttpPost()]
         public async Task<IActionResult> GetNewEmployeeId(int userId)
         {
-            //var store = _context.Store.Any(e => e.PK_Store == user.FK_Store);
-            //var districtId = store.
+            var store = _context.Store.Any(e => e.PK_Store == user.FK_Store);
+            var districtId = store.
             return Content("use");
         }*/
     }

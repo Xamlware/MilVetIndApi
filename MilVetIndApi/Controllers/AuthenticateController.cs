@@ -65,7 +65,8 @@ namespace MilVetIndApi.Controllers
                     expiration = token.ValidTo,
                     id=user.Id
                 });
-            }
+			}
+
             return Unauthorized();
         }
 
