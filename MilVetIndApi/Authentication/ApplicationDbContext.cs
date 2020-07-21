@@ -29,8 +29,22 @@ namespace MilVetIndApi.Authentication
             builder.Entity<Gender>().HasData(new Gender { PK_Gender = 2, GenderName = "Female" });
             builder.Entity<Gender>().HasData(new Gender { PK_Gender = 3, GenderName = "Other" });
 
-            //state
-            builder.Entity<State>().HasData(
+            //District
+            builder.Entity<District>().HasData(new District { PK_District = 1, DistrictName = "District 1" });
+
+            //District
+            builder.Entity<Store>().HasData(new Store { PK_Store = 1, StoreName = "First Store", FK_District=1, LastId= 0, StoreAbbreviation="FS" });
+
+            //Region
+            builder.Entity<Region>().HasData(new Region { PK_Region = 1, RegionName = "Region 1" });
+
+            //Employee
+            builder.Entity<Employee>().HasData(new Employee { PK_Employee = 1, FK_Store=1, FK_Gender=1,
+                FK_Race=1, FK_State=38, Address="", Address1="", AspUserId="",
+                City="", Email="", EmployeeId="", EmployeeName = "Employee 1" });
+
+        //state
+        builder.Entity<State>().HasData(
                 new State { PK_State = 1, StateName = "Alabama", Abbreviation = "AL" },
                 new State { PK_State = 2, StateName = "Alaska", Abbreviation = "AK" },
                 new State { PK_State = 3, StateName = "Arizona", Abbreviation = "AZ" },
