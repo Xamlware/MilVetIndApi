@@ -12,6 +12,9 @@ namespace MilVetIndApi.Data
 		[Key]
 		public int PK_StoreSalesItem { get; set; }
 
+		[Required(ErrorMessage = "Store Sales id is required")]
+		public int FK_StoreSales { get; set; }
+
 		[Required(ErrorMessage = "Inventory id is required")]
 		public int FK_Inventory { get; set; }
 

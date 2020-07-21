@@ -31,9 +31,17 @@ namespace MilVetIndApi.Authentication
 
             //District
             builder.Entity<District>().HasData(new District { PK_District = 1, DistrictName = "District 1", FK_Region=1});
+            builder.Entity<District>(e => e.HasKey(k => k.FK_Region));
 
-            //District
+            //Store
             builder.Entity<Store>().HasData(new Store { PK_Store = 1, StoreName = "First Store", FK_District=1, LastId= 0, StoreAbbreviation="FS" });
+            builder.Entity<Store>(e => e.HasKey(k => k.FK_District));
+
+            //StoreSales
+            builder.Entity<StoreSales>(e => e.HasKey(k => k.FK_Store));
+
+            //StoreSalesItem
+            builder.Entity<StoreSalesItem>(e => e.HasKey(k => k.FK_StoreSales));
 
             //Region
             builder.Entity<Region>().HasData(new Region { PK_Region = 1, RegionName = "Region 1" });

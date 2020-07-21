@@ -47,10 +47,8 @@ namespace MilVetIndApi.Controllers
                 //update store lastid
                 store.LastId = empInt;
 
-                //Created new employee record
-                var emp = new Employee();
-                emp.EmployeeId = empId;
-                emp.FK_Store = store.PK_Store;
+                //update employee record
+                employee.EmployeeId = empId;
                
                 //_context.Employee.Add(emp);
                 await _context.SaveChangesAsync();
