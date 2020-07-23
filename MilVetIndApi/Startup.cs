@@ -21,7 +21,7 @@ namespace MilVetIndApi
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+			public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
@@ -49,24 +49,36 @@ namespace MilVetIndApi
 			})
 
 			// Adding Jwt Bearer  
-			.AddJwtBearer(options =>
-			{
-				options.SaveToken = true;
-				options.RequireHttpsMetadata = false;
-				options.TokenValidationParameters = new TokenValidationParameters()
+				.AddJwtBearer(options =>
 				{
-					ValidateIssuer = true,
-					ValidateAudience = true,
-					ValidAudience = Configuration["JWT:ValidAudience"],
-					ValidIssuer = Configuration["JWT:ValidIssuer"],
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
-				};
+					options.SaveToken = true;
+					options.RequireHttpsMetadata = false;
+					options.TokenValidationParameters = new TokenValidationParameters()
+					{
+						ValidateIssuer = true,
+						ValidateAudience = true,
+						ValidAudience = Configuration["JWT:ValidAudience"],
+						ValidIssuer = Configuration["JWT:ValidIssuer"],
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+					};
+
+				services.AddCors(options =>
+				{
+					options.AddPolicy("CorsPolicy",
+										builder =>
+										{
+											builder.WithOrigins("https://localhost:5002/",
+																"http://www.contoso.com")
+											.WithMethods("PUT", "DELETE", "GET", "POST"); ;
+										});
+				});
+
 			});
 		}
 
 
 	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
@@ -78,6 +90,7 @@ namespace MilVetIndApi
 			app.UseRouting();
 
 			app.UseAuthorization();
+			app.UseCors("CorsPolicy");
 
 			app.UseEndpoints(endpoints =>
 			{
