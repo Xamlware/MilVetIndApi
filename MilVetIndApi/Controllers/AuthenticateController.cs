@@ -109,18 +109,18 @@ namespace MilVetIndApi.Controllers
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
-            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+			//if (!await roleManager.RoleExistsAsync(UserRole.Admin.ToString()))
+			//	await roleManager.CreateAsync(new IdentityRole(UserRole.Admin.ToString()));
 
-            if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+			////if (!await roleManager.RoleExistsAsync(UserRoles.User))
+			////    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-            if (await roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
+			////if (await roleManager.RoleExistsAsync(UserRoles.Manager))
+			////{
+			////    await userManager.AddToRoleAsync(user, UserRoles.Admin);
+			////}
 
-            return Ok(new Response { Status = "Success", Message = "Admin User created successfully!" });
+			return Ok(new Response { Status = "Success", Message = "Admin User created successfully!" });
         }
    }
 }

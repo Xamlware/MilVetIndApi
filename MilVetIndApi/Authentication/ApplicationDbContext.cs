@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MilVetIndApi.Data;
+using MilVetIndApi.Authentication;
 
 namespace MilVetIndApi.Authentication
 {
@@ -107,5 +108,6 @@ namespace MilVetIndApi.Authentication
         public DbSet<Sales> Sales { get; set; }
         public DbSet<SalesItem> SalesItem { get; set; }
         public DbSet<EmployeeTime> EmployeeTime { get; set; }
+        public DbSet<MilVetIndApi.Authentication.CreateRoleViewModel> CreateRoleViewModel { get; set; }
     }
 }
