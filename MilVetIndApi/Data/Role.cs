@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MilVetIndApi.Authentication
+namespace MilVetIndApi.Data
 {
 
-    public class CreateRoleViewModel
+    public class Role
     {
      
         [Key]

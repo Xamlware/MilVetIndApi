@@ -2,19 +2,35 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MilVetIndApi.Data;
 using MilVetIndApi.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace MilVetIndApi.Authentication
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>, ApplicationUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-             
+
+            builder.Entity<ApplicationUserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
             //Race
             builder.Entity<Race>().HasData(new Race { PK_Race = 1, RaceName = "White" });
             builder.Entity<Race>().HasData(new Race { PK_Race = 2, RaceName = "Black" });
@@ -104,10 +120,9 @@ namespace MilVetIndApi.Authentication
         public DbSet<Race> Race { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<EmployeeTime> EmployeeTime { get; set; }
         public DbSet<Store> Store { get; set; }
         public DbSet<Sales> Sales { get; set; }
         public DbSet<SalesItem> SalesItem { get; set; }
-        public DbSet<EmployeeTime> EmployeeTime { get; set; }
-        public DbSet<MilVetIndApi.Authentication.CreateRoleViewModel> CreateRoleViewModel { get; set; }
     }
 }
