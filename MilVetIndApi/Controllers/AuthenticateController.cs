@@ -59,12 +59,14 @@ namespace MilVetIndApi.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                return Ok(new
+                var list = await userManager.GetRolesAsync(user);
+                return Ok(new LoginResponse
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo,
-                    id=user.Id
-                });
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Expiration = token.ValidTo,
+                    Id=user.Id,
+				    Roles = list
+				});
 			}
 
             return Unauthorized();
