@@ -69,6 +69,30 @@ namespace MilVetIndApi.Controllers
 			return StatusCode(StatusCodes.Status302Found, new Response { Status = "Error", Message = "Role already exisits" });
 		}
 
+		[HttpGet]
+		[Route("userRole")]
+		public async Task<ActionResult<IEnumerable<string>>> GetUserRoles([FromBody] UserRole userRole)
+		{
+			var userExists = await userManager.FindByNameAsync(userRole.Username);
+			if (userExists == null)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User not found!" });
+			}
+
+			try
+			{
+				var list = await userManager.GetRolesAsync(userExists);
+				return Ok(list);
+				//return Ok(new Response { Status = "Success", Message = "retrieved " + userRole.RoleName });
+			}
+			catch (Exception e)
+			{
+				var message = e.Message;
+				return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = e.Message });
+			}
+		}
+
+
 		[HttpPut]
 		[Route("userRole")]
 		public async Task<ActionResult<IEnumerable<ApplicationRole>>> AddUserToRole([FromBody] UserRole userRole)
@@ -85,9 +109,17 @@ namespace MilVetIndApi.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Role not found!" });
 			}
 
+			
+			var list = await userManager.GetRolesAsync(userExists);
+			if (list.Contains(userRole.RoleName))
+			{
+				return Ok(new Response { Status = "Success", Message = "User already has " + userRole.RoleName + " role."});
+
+			}
+
 			try
 			{
-				await userManager.AddToRoleAsync(userExists, userRole.RoleName);
+				await userManager.AddToRoleAsync(userExists, roleExists.Name);
 				return Ok(new Response { Status = "Success", Message = "User added to role " + userRole.RoleName});
 			}
 			catch (Exception e)
