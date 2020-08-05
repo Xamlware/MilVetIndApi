@@ -83,7 +83,6 @@ namespace MilVetIndApi.Controllers
 			{
 				var list = await userManager.GetRolesAsync(userExists);
 				return Ok(list);
-				//return Ok(new Response { Status = "Success", Message = "retrieved " + userRole.RoleName });
 			}
 			catch (Exception e)
 			{
@@ -114,13 +113,20 @@ namespace MilVetIndApi.Controllers
 			if (list.Contains(userRole.RoleName))
 			{
 				return Ok(new Response { Status = "Success", Message = "User already has " + userRole.RoleName + " role."});
-
 			}
 
+			return await DoAddUserToRole(userExists, roleExists);
+		}
+
+		//	return StatusCode(StatusCodes.Status302Found, new Response { Status = "Error", Message = "Role already exisits" });
+		//}
+
+		public async Task<ActionResult> DoAddUserToRole(ApplicationUser user, ApplicationRole role)
+		{
 			try
 			{
-				await userManager.AddToRoleAsync(userExists, roleExists.Name);
-				return Ok(new Response { Status = "Success", Message = "User added to role " + userRole.RoleName});
+				await userManager.AddToRoleAsync(user, role.Name);
+				return Ok(new Response { Status = "Success", Message = "User added to role " + role.Name });
 			}
 			catch (Exception e)
 			{
@@ -128,9 +134,6 @@ namespace MilVetIndApi.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = e.Message });
 			}
 		}
-
-		//	return StatusCode(StatusCodes.Status302Found, new Response { Status = "Error", Message = "Role already exisits" });
-		//}
 
 
 
