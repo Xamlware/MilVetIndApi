@@ -15,5 +15,8 @@ namespace MilVetIndApi.Authentication.Models
 	
 		public IList<string> Roles { get; set; }
 
+		public string Status { get; set; }
+
+		public string Message { get; set; }
 	}
 }
