@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -26,9 +27,11 @@ namespace MilVetIndApi.Controllers
         // GET: api/District
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<District>>> GetDistrict()
+        public async Task<ActionResult<ObservableCollection<District>>> GetDistrict()
         {
-            return await _context.District.ToListAsync();
+            var resp = await _context.District.ToListAsync();
+
+            return new ObservableCollection<District>(resp);
         }
 
         // GET: api/District/5
@@ -83,10 +86,32 @@ namespace MilVetIndApi.Controllers
         [HttpPost]
         public async Task<ActionResult<District>> PostDistrict(District district)
         {
-            _context.District.Add(district);
-            await _context.SaveChangesAsync();
+            var message = "";
+            try
+            {
+                var d = _context.District.Where(w => w.DistrictName == district.DistrictName).FirstOrDefault();
+                if (d != null)
+                {
+                    message = "Duplicate";
+                }
+                else
+                {
+                    _context.District.Add(district);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+            }
 
-            return CreatedAtAction("GetDistrict", new { id = district.PK_District }, district);
+            if (message.Equals("Duplicate"))
+            {
+                district.DistrictName = "Duplicate";
+            }
+
+            return Ok(district);
+            //return CreatedAtAction("GetDistrict", new { id = district.PK_District }, district);
         }
 
         // DELETE: api/District/5

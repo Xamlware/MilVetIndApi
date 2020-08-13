@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,11 @@ namespace MilVetIndApi.Controllers
 
         // GET: api/Region
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Region>>> GetRegion()
+        public async Task<ActionResult<ObservableCollection<Region>>> GetRegion()
         {
-            return await _context.Region.ToListAsync();
+            var resp = await _context.Region.ToListAsync();
+
+            return new ObservableCollection<Region>(resp);
         }
 
         // GET: api/Region/5
