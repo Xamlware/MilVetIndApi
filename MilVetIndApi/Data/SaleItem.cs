@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MilVetIndApi.Data
 {
-	public class SalesItem
+	public class SaleItem
 	{
-		public SalesItem()
+		public SaleItem()
 		{
 		}
 

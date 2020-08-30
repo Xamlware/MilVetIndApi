@@ -57,9 +57,25 @@ namespace MilVetIndApi.Authentication
             builder.Entity<Region>().HasData(new Region { PK_Region = 1, RegionName = "Region 1" });
 
             //Employee
-            builder.Entity<Employee>().HasData(new Employee { PK_Employee = 1, FK_Store=1, FK_Gender=1,
-                FK_Race=1, FK_State=38, Address="", Address1="", AspUserId="",
-                City="", Email="", EmployeeId="", EmployeeName = "Employee 1" });
+            builder.Entity<Employee>().HasData(new Employee { 
+                PK_Employee = 1, 
+                FK_Store=1,
+                FK_State = 38,
+                FK_Country = 1,
+                FK_Race=1,
+                FK_Gender = 1,
+                EmployeeId = "FS1",
+                AspUserId = "",
+                FirstName = "Charles",
+                MiddleName="John",
+                LastName="Baird",
+                NameSuffix="",
+                Email = "jbaird@outlook.com",
+                Address = "5000B Newport Road", 
+                Address1="", 
+                City="Kinzers", 
+                ZipCode="17535",
+                EmployeeName = "Employee 1" });
 
         //state
         builder.Entity<State>().HasData(
@@ -118,11 +134,12 @@ namespace MilVetIndApi.Authentication
         public DbSet<District> District { get; set; }
         public DbSet<Region> Region { get; set; }
         public DbSet<Race> Race { get; set; }
+        public DbSet<Gender> Gender { get; set; }
         public DbSet<State> State { get; set; }
         public DbSet<Employee> Employee { get; set; }
         public DbSet<EmployeeTime> EmployeeTime { get; set; }
         public DbSet<Store> Store { get; set; }
-        public DbSet<Sales> Sales { get; set; }
-        public DbSet<SalesItem> SalesItem { get; set; }
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<SaleItem> SaleItem { get; set; }
     }
 }
